@@ -1,0 +1,100 @@
+{
+  "name": "aws-toolkit-profile-exporter",
+  "displayName": "AWS Toolkit Profile Exporter",
+  "publisher": "curdbecker",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.108.1"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "extensionDependencies": [
+    "amazonwebservices.aws-toolkit-vscode"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "awsToolkitProfileExporter.exportConfig",
+        "title": "AWS: Export AWS Toolkit connections"
+      }
+    ],
+    "configuration": {
+      "title": "AWS Toolkit Profile Exporter",
+      "properties": {
+        "awsToolkitProfileExporter.configLocation": {
+          "type": "string",
+          "enum": [
+            "isolated",
+            "custom",
+            "global"
+          ],
+          "default": "isolated",
+          "description": "Where AWS profiles generated from AWS Toolkit connections are written: 'isolated' uses an isolated config managed by this extension (recommended), 'global' will overwrite the config in the default location in your home directory (potentially dangerous)."
+        },
+        "awsToolkitProfileExporter.customConfigPath": {
+          "type": "string",
+          "default": "",
+          "description": "Custom path for the generated AWS config file. Used only when configLocation is set to 'custom'."
+        },
+        "awsToolkitProfileExporter.preferredRole": {
+          "type": "string",
+          "default": "AdministratorAccess",
+          "description": "Preferred IAM Identity Center role name used when generating profiles. If the role is present, profiles for an account with this role will be named after the account only. Otherwise, the profile will be named \"%{account name}-$%{role name}\"."
+        },
+        "awsToolkitProfileExporter.autoRegenerate": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically regenerate AWS config when AWS Toolkit connections change."
+        },
+        "awsToolkitProfileExporter.exportOnLaunch": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically export AWS config when VS Code is launched."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "yarn run check-types && yarn run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "yarn run check-types && yarn run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir dist",
+    "watch-tests": "tsc -p . -w --outDir dist",
+    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^5.7.0",
+    "@types/ini": "^4.1.1",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.108.1",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.7.1",
+    "esbuild": "^0.27.2",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.8.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.52.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sso": "^3.970.0",
+    "@aws-sdk/token-providers": "^3.970.0",
+    "ini": "^6.0.0"
+  }
+}

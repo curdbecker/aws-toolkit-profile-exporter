@@ -1,0 +1,36 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+	"files.exclude": {
+		"dist": false,
+	},
+	"search.exclude": {
+		"dist": true,
+	},
+	"tslint.enable": false,
+	"files.trimTrailingWhitespace": true,
+	"editor.insertSpaces": false,
+	"editor.tabSize": 4,
+	"typescript.tsdk": "./node_modules/typescript/lib",
+	"typescript.tsc.autoDetect": "off",
+	"typescript.tsserver.trace": "off",
+	"typescript.tsserver.log": "off",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	},
+	"eslint.enable": true,
+	"eslint.useESLintClass": true,
+	"eslint.useFlatConfig": true,
+	"eslint.codeActionsOnSave.rules": [
+		"@typescript-eslint/semi",
+		"@typescript-eslint/indent",
+		"!@typescript-eslint/*",
+		"*"
+	],
+	"eslint.workingDirectories": [
+		"./src",
+	],
+	"eslint.trace.server": "messages",
+	"eslint.debug": false,
+	"eslint.lintTask.enable": false,
+	"eslint.format.enable": true,
+}
